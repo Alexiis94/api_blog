@@ -3,13 +3,15 @@ import cors from "cors"
 
 import { AddressInfo } from "net"
 import cookieParser from "cookie-parser"
-import { PORT } from "./config"
+import logger from "morgan"
 
+import { PORT } from "./config"
 import { Connection } from "./database/connections"
 import { authRoutes, userRoutes } from "./routes"
 
 const api = express()
 
+api.use(logger("dev"))
 api.use(cors())
 
 api.use(cookieParser())

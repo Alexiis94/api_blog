@@ -1,4 +1,4 @@
-import { ProjectionType, Types } from "mongoose"
+import { FilterQuery, ProjectionType, Types, UpdateQuery } from "mongoose"
 import { User } from "src/interfaces/user.interface"
 import { userModel } from "src/models/user.model"
 
@@ -17,8 +17,8 @@ class UserService {
     return await userModel.create(userData)
   }
 
-  async updateUser(userId: string, userData: any) {
-    return await userModel.findByIdAndUpdate(userId, userData, { new: true })
+  async updateUser(filter: FilterQuery<User>, update: UpdateQuery<User>) {
+    return await userModel.findOneAndUpdate(filter, update)
   }
 
   async deleteUser(userId: string) {

@@ -59,6 +59,11 @@ class AuthController implements Authentication {
       const validPassword = bcrypt.compareSync(password, user.password)
       if (!validPassword) return res.status(400).json({ status: 500, success: false, msg: "Invalid Credential" })
 
+      const fieldsToSet = {
+        lastLogin: new Date(),
+      }
+      await userService.updateUser({ email: user.email }, fieldsToSet)
+
       const token = jwt.sign({ user: user.email, exp: Math.floor(Date.now() / 1000) + 3600 * 24 }, JWT_SECRET)
       res.setHeader("Authorization", "Bearer" + token)
 
@@ -66,7 +71,7 @@ class AuthController implements Authentication {
         status: 200,
         success: true,
         msg: "User logged successfully",
-        payload: { token },
+        payload: { token, userData: user },
       })
     } catch (error) {
       console.log(error)
