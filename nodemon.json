@@ -1,0 +1,6 @@
+{
+  "watch": ["src", ".env", "swagger.json"],
+  "ext": "js,ts,json,pug",
+  "ignore": ["src/**/*.spec.ts"],
+  "exec": "ts-node --transpile-only -r tsconfig-paths/register ./src/api.ts"
+}
